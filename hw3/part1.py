@@ -21,7 +21,16 @@ def gauss_pyramid(image, levels):
   '''
   output = []
   # Insert your code here ------------------------------------------------------
-
+  print(np.shape(image))
+  print(levels)
+  output.append(image)
+  for i in range(0,levels):
+    curimage = output[-1]
+    newimage = part0.reduce(curimage)
+    output.append(newimage)
+  for i in range(0,len(output)):
+    print(np.shape(output[i]))
+    
   # ----------------------------------------------------------------------------
   return output
 
@@ -50,7 +59,23 @@ def lapl_pyramid(gauss_pyr):
   '''
   output = []
   # Insert your code here ------------------------------------------------------
-
+  for i in range(0,len(gauss_pyr)):
+    print(np.shape(gauss_pyr[i]))
+    
+  print(len(gauss_pyr))
+  for i in range(0,len(gauss_pyr)-1):
+    print(i)
+    print(np.shape(gauss_pyr[i]))
+    print(np.shape(gauss_pyr[i+1]))
+    tmp = part0.expand(gauss_pyr[i+1])
+    shape = np.shape(gauss_pyr[i])
+    width = shape[1]
+    height = shape[0]
+    tmp = tmp[0:height,0:width]
+    print(np.shape(tmp))
+    output.append(gauss_pyr[i] - tmp)
+  output.append(gauss_pyr[i+1])
+  print output
   # ----------------------------------------------------------------------------
   return output
 

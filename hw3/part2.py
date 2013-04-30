@@ -31,7 +31,16 @@ def blend(lapl_pyr_white, lapl_pyr_black, gauss_pyr_mask):
 
   blended_pyr = []
   # Insert your code here ------------------------------------------------------
-
+  l = len(gauss_pyr_mask)
+  for i in range(0,l):
+    gpm = gauss_pyr_mask[i]
+    print "gpm"
+    print gpm
+    lpw = lapl_pyr_white[i]
+    lpb = lapl_pyr_black[i]
+    ones = np.ones(np.shape(gpm))
+    tmp = np.multiply(lpw,gpm) + np.multiply(lpb,ones - gpm)
+    blended_pyr.append(tmp)
   # ----------------------------------------------------------------------------
   return blended_pyr
 
@@ -53,7 +62,22 @@ def collapse(lapl_pyr):
   '''
   output = None
   # Insert your code here ------------------------------------------------------
-
+  lapl_pyr.reverse()
+  def tmpfun(x,y):
+    s = np.shape(y)
+    h = s[0]
+    w = s[1]
+    x = part0.expand(x)
+    x = x[0:h,0:w]
+    print x+y
+    return y + x
+  
+  
+  reduced = reduce(tmpfun
+                   ,
+                   lapl_pyr)
+  output = reduced
+  
   # ----------------------------------------------------------------------------
   return output
 

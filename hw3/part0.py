@@ -24,7 +24,10 @@ def reduce(image):
   '''
   out = None
   # Insert your code here ------------------------------------------------------
-
+  kernel = generating_kernel(0.4)
+  out = scipy.signal.convolve2d(image, kernel, mode='same')
+  out = out[::2,::2]
+  print np.shape(out)
   # ----------------------------------------------------------------------------
   return out
   
@@ -43,7 +46,19 @@ def expand(image):
   '''
   out = None
   # Insert your code here ------------------------------------------------------
-
+  kernel = generating_kernel(0.4)
+  shape = np.shape(image)
+  height = shape[0]
+  width = shape[1]
+  height = 2*height
+  width = 2*width
+  extplimage = np.zeros(height*width)
+  extplimage = np.reshape(extplimage, (height, width))
+  extplimage[::2,::2] = image
+  print image
+  print extplimage
+  out = scipy.signal.convolve2d(extplimage, kernel, mode='same')
+  out = 4*out
   # ----------------------------------------------------------------------------
   return out
 
